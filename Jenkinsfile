@@ -15,7 +15,8 @@ pipeline {
   stages {
     stage('BUILD') {
       steps {
-        sh 'go install'
+        sh 'GOPATH=$PWD && go get -d -v ./...'
+        sh 'GOPATH=$PWD && go install -v ./...'
       }
     }
 

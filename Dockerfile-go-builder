@@ -1,12 +1,1 @@
 FROM golang:alpine
-
-ENV GOPATH /project
-ENV PATH $PATH:$GOPATH/bin
-
-WORKDIR /project
-COPY . .
-
-RUN go get -d -v ./...
-RUN go install -v ./...
-
-VOLUME /project/bin
