@@ -1,7 +1,11 @@
+#!/usr/bin/groovy
+
+@Library("mycpl") _
+
 pipeline {
   agent {
     docker {
-      image 'go-builder:latest'
+      image 'go-build-agent:latest'
     }
   }
 
@@ -15,20 +19,20 @@ pipeline {
   stages {
     stage('BUILD') {
       steps {
-        sh 'GOPATH=$PWD && go get -d -v ./...'
-        sh 'GOPATH=$PWD && go install -v ./...'
+        notifySlack status: 'BUILD', message: 'compiling helloworld server'
+        sh 'make compile'
       }
     }
 
     stage('QA') {
       steps {
-        echo "Future..."
+        echo "Coming soon..."
       }
     }
 
     stage('PUBLISH') {
       steps {
-        echo "Future..."
+        echo "Coming soon..."
       }
     }
   }
@@ -36,9 +40,11 @@ pipeline {
   post {
     failure {
       echo "Build Failed"
+      notifySlack status: 'FAILURE', message: 'Build Failed'
     }
     success {
       echo "Build Success"
+      notifySlack status: 'SUCCESS', message: 'Build Succeeded'
     }
     always {
       echo "Build Done"
