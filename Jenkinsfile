@@ -17,10 +17,17 @@ pipeline {
   }
 
   stages {
-    stage('BUILD') {
+    stage('COMPILE') {
       steps {
         notifySlack status: 'BUILD', message: 'compiling helloworld server'
         sh 'make compile'
+      }
+    }
+
+    stage('DOCKER') {
+      steps {
+        notifySlack status: 'BUILD', message: 'building docker image'
+        sh 'make build'
       }
     }
 

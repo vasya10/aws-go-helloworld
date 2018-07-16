@@ -1,2 +1,2 @@
-FROM golang:alpine
+FROM golang:latest
 LABEL Build agent used by Jenkins to compile go files and create binaries
